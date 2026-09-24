@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CollaborativeCodeEditor.Api/CollaborativeCodeEditor.Api.csproj" />
+    <Project Path="src/CollaborativeCodeEditor.Application/CollaborativeCodeEditor.Application.csproj" />
+    <Project Path="src/CollaborativeCodeEditor.Domain/CollaborativeCodeEditor.Domain.csproj" />
+    <Project Path="src/CollaborativeCodeEditor.Infrastructure/CollaborativeCodeEditor.Infrastructure.csproj" />
+    <Project Path="src/CollaborativeCodeEditor.Worker/CollaborativeCodeEditor.Worker.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CollaborativeCodeEditor.Application.Tests/CollaborativeCodeEditor.Application.Tests.csproj" />
+    <Project Path="tests/CollaborativeCodeEditor.Domain.Tests/CollaborativeCodeEditor.Domain.Tests.csproj" />
+    <Project Path="tests/CollaborativeCodeEditor.Infrastructure.Tests/CollaborativeCodeEditor.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>

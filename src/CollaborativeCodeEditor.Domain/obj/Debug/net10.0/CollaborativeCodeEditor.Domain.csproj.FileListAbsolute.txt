@@ -1,0 +1,11 @@
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Domain\bin\Debug\net10.0\CollaborativeCodeEditor.Domain.deps.json
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Domain\bin\Debug\net10.0\CollaborativeCodeEditor.Domain.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Domain\bin\Debug\net10.0\CollaborativeCodeEditor.Domain.pdb
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Domain\obj\Debug\net10.0\CollaborativeCodeEditor.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Domain\obj\Debug\net10.0\CollaborativeCodeEditor.Domain.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Domain\obj\Debug\net10.0\CollaborativeCodeEditor.Domain.AssemblyInfo.cs
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Domain\obj\Debug\net10.0\CollaborativeCodeEditor.Domain.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Domain\obj\Debug\net10.0\CollaborativeCodeEditor.Domain.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Domain\obj\Debug\net10.0\refint\CollaborativeCodeEditor.Domain.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Domain\obj\Debug\net10.0\CollaborativeCodeEditor.Domain.pdb
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Domain\obj\Debug\net10.0\ref\CollaborativeCodeEditor.Domain.dll

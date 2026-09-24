@@ -1,0 +1,15 @@
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\bin\Debug\net10.0\CollaborativeCodeEditor.Application.deps.json
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\bin\Debug\net10.0\CollaborativeCodeEditor.Application.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\bin\Debug\net10.0\CollaborativeCodeEditor.Application.pdb
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\bin\Debug\net10.0\CollaborativeCodeEditor.Domain.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\bin\Debug\net10.0\CollaborativeCodeEditor.Domain.pdb
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\obj\Debug\net10.0\CollaborativeCodeEditor.Application.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\obj\Debug\net10.0\CollaborativeCodeEditor.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\obj\Debug\net10.0\CollaborativeCodeEditor.Application.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\obj\Debug\net10.0\CollaborativeCodeEditor.Application.AssemblyInfo.cs
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\obj\Debug\net10.0\CollaborativeCodeEditor.Application.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\obj\Debug\net10.0\Collabor.9A189F40.Up2Date
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\obj\Debug\net10.0\CollaborativeCodeEditor.Application.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\obj\Debug\net10.0\refint\CollaborativeCodeEditor.Application.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\obj\Debug\net10.0\CollaborativeCodeEditor.Application.pdb
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Application\obj\Debug\net10.0\ref\CollaborativeCodeEditor.Application.dll
