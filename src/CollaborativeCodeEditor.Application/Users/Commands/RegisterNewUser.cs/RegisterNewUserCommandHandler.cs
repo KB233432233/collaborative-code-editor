@@ -29,7 +29,8 @@ public sealed class RegisterNewUserCommandHandler
     {
         var user = User.Create(
             UserId.New(),
-           command.DisplayName);
+           DisplayName.Create(command.DisplayName),
+            Email.Create(command.Email));
 
         await _userRepository.AddAsync(
             user,

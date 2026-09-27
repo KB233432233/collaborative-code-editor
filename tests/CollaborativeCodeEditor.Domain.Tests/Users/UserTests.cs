@@ -10,15 +10,19 @@ public sealed class UserTests
     {
         // Arrange
         var userId = UserId.New();
+        var displayName = DisplayName.Create("Khaled");
+        var email = Email.Create("khaled@example.com");
 
         // Act
         var user = User.Create(
             userId,
-            "Khaled");
+            displayName,
+            email);
 
         // Assert
         Assert.Equal(userId, user.Id);
-        Assert.Equal("Khaled", user.DisplayName);
+        Assert.Equal(displayName, user.DisplayName);
+        Assert.Equal(email, user.Email);
     }
 
     [Fact]
@@ -26,11 +30,14 @@ public sealed class UserTests
     {
         // Arrange
         var userId = UserId.New();
+        var displayName = DisplayName.Create("Khaled");
+        var email = Email.Create("khaled@example.com");
 
         // Act
         var user = User.Create(
             userId,
-            "Khaled");
+            displayName,
+            email);
 
         // Assert
         var domainEvent = Assert.Single(
@@ -46,7 +53,8 @@ public sealed class UserTests
         Assert.Throws<ArgumentException>(() =>
             User.Create(
                 UserId.Empty,
-                "Khaled"));
+                DisplayName.Create("Khaled"),
+                Email.Create("khaled@example.com")));
     }
 
     [Fact]
@@ -56,7 +64,8 @@ public sealed class UserTests
         Assert.Throws<ArgumentException>(() =>
             User.Create(
                 UserId.New(),
-                ""));
+                DisplayName.Create(""),
+                Email.Create("khaled@example.com")));
     }
 
     [Fact]
@@ -66,7 +75,8 @@ public sealed class UserTests
         Assert.Throws<ArgumentException>(() =>
             User.Create(
                 UserId.New(),
-                "   "));
+                DisplayName.Create("   "),
+                Email.Create("khaled@example.com")));
     }
 
     [Fact]
@@ -79,7 +89,8 @@ public sealed class UserTests
         Assert.Throws<ArgumentException>(() =>
             User.Create(
                 UserId.New(),
-                displayName));
+                DisplayName.Create(displayName),
+                Email.Create("khaled@example.com")));
     }
 
     [Fact]
@@ -88,14 +99,16 @@ public sealed class UserTests
         // Arrange
         var user = User.Create(
             UserId.New(),
-            "Old Name");
+            DisplayName.Create("Old Name"),
+            Email.Create("khaled@example.com"));
 
         // Act
-        user.ChangeDisplayName("New Name");
+        var newDisplayName = DisplayName.Create("New Name");
+        user.ChangeDisplayName(newDisplayName);
 
         // Assert
         Assert.Equal(
-            "New Name",
+            newDisplayName,
             user.DisplayName);
     }
 
@@ -105,42 +118,51 @@ public sealed class UserTests
         // Arrange
         var user = User.Create(
             UserId.New(),
-            "Khaled");
+            DisplayName.Create("Khaled"),
+            Email.Create("khaled@example.com"));
 
         // Act & Assert
         Assert.Throws<ArgumentException>(() =>
-            user.ChangeDisplayName(""));
+            user.ChangeDisplayName(DisplayName.Create("")));
     }
 
     [Fact]
     public void Create_ShouldTrimDisplayName()
     {
         // Act
+        var Name = DisplayName.Create("  Khaled  ");
+
         var user = User.Create(
             UserId.New(),
-            "  Khaled  ");
+            Name,
+            Email.Create("khaled@example.com"));
 
         // Assert
         Assert.Equal(
             "Khaled",
-            user.DisplayName);
+            user.DisplayName.Value);
     }
 
     [Fact]
     public void ChangeDisplayName_ShouldTrimDisplayName()
     {
         // Arrange
+        var Name = DisplayName.Create("Khaled");
+
         var user = User.Create(
             UserId.New(),
-            "Khaled");
+            Name,
+            Email.Create("khaled@example.com"));
 
         // Act
+        var newName = DisplayName.Create("  New Name  ");
+
         user.ChangeDisplayName(
-            "  New Name  ");
+            newName);
 
         // Assert
         Assert.Equal(
             "New Name",
-            user.DisplayName);
+            user.DisplayName.Value);
     }
 }

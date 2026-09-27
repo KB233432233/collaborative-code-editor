@@ -1,5 +1,6 @@
 using CollaborativeCodeEditor.Application.Common.Persistence;
 using CollaborativeCodeEditor.Application.Workspaces.Ports;
+using CollaborativeCodeEditor.Application.Users.Ports;
 using CollaborativeCodeEditor.Infrastructure.Persistence;
 using CollaborativeCodeEditor.Infrastructure.Persistence.Repositories;
 
@@ -23,6 +24,8 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IWorkspaceRepository, WorkspaceRepository>();
+
+        services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 

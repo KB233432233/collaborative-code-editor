@@ -67,3 +67,8 @@ C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Wo
 C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Worker\obj\Debug\net10.0\CollaborativeCodeEditor.Worker.pdb
 C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Worker\obj\Debug\net10.0\CollaborativeCodeEditor.Worker.genruntimeconfig.cache
 C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Worker\obj\Debug\net10.0\ref\CollaborativeCodeEditor.Worker.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Worker\bin\Debug\net10.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Worker\bin\Debug\net10.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Worker\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Worker\bin\Debug\net10.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\User\Desktop\net\CollaborativeCodeEditor\src\CollaborativeCodeEditor.Worker\bin\Debug\net10.0\Microsoft.Extensions.Identity.Stores.dll

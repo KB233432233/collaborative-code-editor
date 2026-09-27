@@ -19,7 +19,8 @@ public static class RegisterNewUserEndpoint
             {
                 var command =
                     new RegisterNewUserCommand(
-                        request.DisplayName);
+                        request.DisplayName,
+                        request.Email);
 
                 var result =
                     await sender.Send(

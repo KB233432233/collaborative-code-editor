@@ -11,8 +11,13 @@ public sealed class RegisterNewUserCommandValidator
         RuleFor(x => x.DisplayName)
             .NotEmpty()
                 .WithMessage("Display name is required.")
-            .MaximumLength(50)
+            .MaximumLength(100)
                 .WithMessage(
-                    "Display name cannot exceed 50 characters.");
+                    "Display name cannot exceed 100 characters.");
+        RuleFor(x => x.Email)
+            .NotEmpty()
+                .WithMessage("Email is required.")
+            .EmailAddress()
+                .WithMessage("Email must be a valid email address.");
     }
 }

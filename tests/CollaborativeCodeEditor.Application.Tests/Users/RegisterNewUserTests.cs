@@ -19,15 +19,48 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
     }
 
     [Fact]
-    public async Task RegisterNewUser_Should_Presist()
+    public async Task RegisterNewUser_ShouldPersistUser()
     {
-        var userId = new UserId(Guid.NewGuid());
+        await using var serviceProvider =
+            TestServiceProvider.Create(
+                _database.ConnectionString,
+                new FakeCurrentUser(
+                    new UserId(Guid.NewGuid())));
 
-        // await using var serviceProvider =
-        // TestServiceProvider.Create(
-        //     _database.ConnectionString,
-        //     currentUser);
+        var mediator =
+            serviceProvider.GetRequiredService<ISender>();
 
-        var command = new RegisterNewUserCommand("New User");
+        var command =
+            new RegisterNewUserCommand(
+                "New User",
+                "newuser@example.com");
+
+        var result =
+            await mediator.Send(command);
+
+        result.IsSuccess.Should().BeTrue();
+
+        var userId = result.Value;
+
+        await using var verificationContext =
+            new AppDbContext(
+                new DbContextOptionsBuilder<AppDbContext>()
+                    .UseNpgsql(_database.ConnectionString)
+                    .Options);
+
+        var user =
+            await verificationContext.Users
+                .SingleOrDefaultAsync(
+                    x => x.Id == new UserId(userId));
+
+        user.Should().NotBeNull();
+
+        user!.DisplayName
+            .Should()
+            .Be("New User");
+
+        user!.Email
+            .Should()
+            .Be("newuser@example.com");
     }
 }
