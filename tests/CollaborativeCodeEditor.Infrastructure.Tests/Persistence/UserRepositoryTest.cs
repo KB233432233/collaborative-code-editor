@@ -25,7 +25,8 @@ public sealed class UserRepositoryTests
 
         var user = User.Create(
             userId,
-            "Test User");
+            DisplayName.Create("Test User"),
+            Email.Create("testuser@example.com"));
 
         await repository.AddAsync(user);
 
@@ -36,6 +37,7 @@ public sealed class UserRepositoryTests
         result.Should().NotBeNull();
 
         result!.Id.Should().Be(userId);
-        result.DisplayName.Should().Be("Test User");
+        result.Email.Value.Should().Be("testuser@example.com");
+        result.DisplayName.Value.Should().Be("Test User");
     }
 }

@@ -22,7 +22,17 @@ public sealed class UserConfiguration
                 value => new UserId(value));
 
         builder.Property(x => x.DisplayName)
-            .HasMaxLength(50)
+            .HasConversion(
+                displayName => displayName.Value,
+                value => DisplayName.Create(value))
+            .HasMaxLength(DisplayName.MaxLength)
+            .IsRequired();
+
+        builder.Property(x => x.Email)
+            .HasConversion(
+                email => email.Value,
+                value => Email.Create(value))
+            .HasMaxLength(Email.MaxLength)
             .IsRequired();
     }
 }

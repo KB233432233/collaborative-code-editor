@@ -6,6 +6,8 @@ using CollaborativeCodeEditor.Infrastructure.Persistence;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace CollaborativeCodeEditor.Application.Tests.Users;
 
@@ -19,47 +21,47 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
     }
 
     [Fact]
-    public async Task RegisterNewUser_ShouldPersistUser()
+    public async Task RegisterNewUser_Should_Persist()
     {
         await using var serviceProvider =
             TestServiceProvider.Create(
                 _database.ConnectionString,
-                new FakeCurrentUser(
-                    new UserId(Guid.NewGuid())));
+                new FakeCurrentUser(new UserId(Guid.NewGuid())));
 
-        var mediator =
+        var sender =
             serviceProvider.GetRequiredService<ISender>();
 
         var command =
             new RegisterNewUserCommand(
                 "New User",
-                "newuser@example.com");
+                "newuser@example.com",
+                "Password123!");
 
         var result =
-            await mediator.Send(command);
+            await sender.Send(command);
 
         result.IsSuccess.Should().BeTrue();
 
-        var userId = result.Value;
-
-        await using var verificationContext =
-            new AppDbContext(
-                new DbContextOptionsBuilder<AppDbContext>()
-                    .UseNpgsql(_database.ConnectionString)
-                    .Options);
+        var dbContext =
+            serviceProvider
+                .GetRequiredService<AppDbContext>();
 
         var user =
-            await verificationContext.Users
-                .SingleOrDefaultAsync(
-                    x => x.Id == new UserId(userId));
+            await dbContext.Users
+                .FirstOrDefaultAsync(
+                    x => x.Id == new UserId(result.Value));
 
         user.Should().NotBeNull();
 
-        user!.DisplayName
-            .Should()
-            .Be("New User");
+        var userManager =
+            serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-        user!.Email
+        var identityUser =
+    await userManager.FindByIdAsync(
+        result.Value.ToString());
+
+        identityUser.Should().NotBeNull();
+        identityUser!.Email
             .Should()
             .Be("newuser@example.com");
     }
