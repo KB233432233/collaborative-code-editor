@@ -19,5 +19,9 @@ public sealed class RegisterNewUserCommandValidator
                 .WithMessage("Email is required.")
             .EmailAddress()
                 .WithMessage("Email must be a valid email address.");
+
+        RuleFor(x => x.Password)
+            .NotEmpty()
+                .WithMessage("Password is required.");
     }
 }

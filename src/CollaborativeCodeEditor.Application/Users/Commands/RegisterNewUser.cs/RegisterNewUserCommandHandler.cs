@@ -30,31 +30,38 @@ public sealed class RegisterNewUserCommandHandler
         RegisterNewUserCommand command,
         CancellationToken cancellationToken)
     {
-        var email = Email.Create(command.Email);
+        return await _unitOfWork.ExecuteInTransactionAsync(
+            async () =>
+            {
+                var email = Email.Create(command.Email);
+                var displayName =
+                    DisplayName.Create(command.DisplayName);
 
-        var identityResult =
-            await _identityService.CreateUserAsync(
-                email,
-                command.Password,
-                cancellationToken);
+                var identityResult =
+                    await _identityService.CreateUserAsync(
+                        email,
+                        command.Password,
+                        cancellationToken);
 
-        if (identityResult.IsFailure)
-            return Result<Guid>.Failure(
-                identityResult.Error!);
+                if (identityResult.IsFailure)
+                    return Result<Guid>.Failure(
+                        identityResult.Error!);
 
-        var user = User.Create(
-            identityResult.Value,
-            DisplayName.Create(command.DisplayName),
-            email);
+                var user = User.Create(
+                    identityResult.Value,
+                    displayName,
+                    email);
 
-        await _userRepository.AddAsync(
-            user,
+                await _userRepository.AddAsync(
+                    user,
+                    cancellationToken);
+
+                await _unitOfWork.SaveChangesAsync(
+                    cancellationToken);
+
+                return Result<Guid>.Success(
+                    user.Id.Value);
+            },
             cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(
-            cancellationToken);
-
-        return Result<Guid>.Success(
-            user.Id.Value);
     }
 }

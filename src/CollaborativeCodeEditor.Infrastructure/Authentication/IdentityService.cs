@@ -1,7 +1,7 @@
 using CollaborativeCodeEditor.Application.Authentication;
 using CollaborativeCodeEditor.Domain.Users;
-using CollaborativeCodeEditor.Application.Common.Results;
 using Microsoft.AspNetCore.Identity;
+using CollaborativeCodeEditor.Application.Common.Results;
 
 namespace CollaborativeCodeEditor.Infrastructure.Authentication;
 
@@ -33,8 +33,7 @@ public sealed class IdentityService : IIdentityService
 
         if (!result.Succeeded)
         {
-            var error = result.Errors
-                .First();
+            var error = result.Errors.First();
 
             return Result<UserId>.Failure(
                 new Error(

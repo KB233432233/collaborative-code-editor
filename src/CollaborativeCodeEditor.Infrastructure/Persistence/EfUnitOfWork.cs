@@ -17,4 +17,30 @@ public sealed class EfUnitOfWork : IUnitOfWork
     {
         return _dbContext.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<T> ExecuteInTransactionAsync<T>(
+        Func<Task<T>> action,
+        CancellationToken cancellationToken = default)
+    {
+        await using var transaction =
+            await _dbContext.Database.BeginTransactionAsync(
+                cancellationToken);
+
+        try
+        {
+            var result = await action();
+
+            await transaction.CommitAsync(
+                cancellationToken);
+
+            return result;
+        }
+        catch
+        {
+            await transaction.RollbackAsync(
+                cancellationToken);
+
+            throw;
+        }
+    }
 }
