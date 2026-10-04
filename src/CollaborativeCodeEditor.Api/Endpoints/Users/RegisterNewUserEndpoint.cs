@@ -20,7 +20,8 @@ public static class RegisterNewUserEndpoint
                 var command =
                     new RegisterNewUserCommand(
                         request.DisplayName,
-                        request.Email);
+                        request.Email,
+                        request.Password);
 
                 var result =
                     await sender.Send(

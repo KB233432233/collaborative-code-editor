@@ -8,6 +8,8 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using CollaborativeCodeEditor.Infrastructure.Authentication;
+using FluentValidation;
+using FluentAssertions;
 
 
 namespace CollaborativeCodeEditor.Application.Tests.Users;
@@ -227,14 +229,15 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
 
         // Act
         var result =
-            await mediator.Send(
+            () => mediator.Send(
                 new RegisterNewUserCommand(
                     "Khaled",
                     "not-an-email",
                     "Password123!"));
 
         // Assert
-        result.IsSuccess.Should().BeFalse();
+        await result.Should()
+            .ThrowAsync<ValidationException>();
     }
 
     [Fact]
@@ -253,13 +256,14 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
 
         // Act
         var result =
-            await mediator.Send(
+            () => mediator.Send(
                 new RegisterNewUserCommand(
                     "",
                     "khaled@example.com",
                     "Password123!"));
 
         // Assert
-        result.IsSuccess.Should().BeFalse();
+        await result.Should()
+            .ThrowAsync<ValidationException>();
     }
 }
