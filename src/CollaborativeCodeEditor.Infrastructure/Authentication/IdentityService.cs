@@ -44,4 +44,37 @@ public sealed class IdentityService : IIdentityService
         return Result<UserId>.Success(
             new UserId(identityUser.Id));
     }
+
+    public async Task<Result<UserId>> ValidateCredentialsAsync(
+    Email email,
+    string password,
+    CancellationToken cancellationToken = default)
+    {
+        var identityUser =
+            await _userManager.FindByEmailAsync(email.Value);
+
+        if (identityUser is null)
+        {
+            return Result<UserId>.Failure(
+                new Error(
+                    "Identity.InvalidCredentials",
+                    "Invalid email or password."));
+        }
+
+        var passwordValid =
+            await _userManager.CheckPasswordAsync(
+                identityUser,
+                password);
+
+        if (!passwordValid)
+        {
+            return Result<UserId>.Failure(
+                new Error(
+                    "Identity.InvalidCredentials",
+                    "Invalid email or password."));
+        }
+
+        return Result<UserId>.Success(
+            new UserId(identityUser.Id));
+    }
 }

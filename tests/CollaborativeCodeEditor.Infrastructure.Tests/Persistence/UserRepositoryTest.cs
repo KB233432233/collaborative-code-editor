@@ -14,6 +14,9 @@ public sealed class UserRepositoryTests
         _database = database;
     }
 
+    private static string UniqueEmail()
+   => $"user.{Guid.NewGuid():N}@example.com";
+
     [Fact]
     public async Task AddAsync_ShouldPersistUser()
     {
@@ -21,12 +24,12 @@ public sealed class UserRepositoryTests
             new UserRepository(_database.DbContext);
 
         var userId = new UserId(Guid.NewGuid());
-        // var userName = UserName.Create("Test User");
+        var email = UniqueEmail();
 
         var user = User.Create(
             userId,
             DisplayName.Create("Test User"),
-            Email.Create("testuser@example.com"));
+            Email.Create(email));
 
         await repository.AddAsync(user);
 
@@ -37,7 +40,7 @@ public sealed class UserRepositoryTests
         result.Should().NotBeNull();
 
         result!.Id.Should().Be(userId);
-        result.Email.Value.Should().Be("testuser@example.com");
+        result.Email.Value.Should().Be(email);
         result.DisplayName.Value.Should().Be("Test User");
     }
 }

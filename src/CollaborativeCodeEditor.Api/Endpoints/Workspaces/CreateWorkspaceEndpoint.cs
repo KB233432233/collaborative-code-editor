@@ -35,7 +35,7 @@ public static class CreateWorkspaceEndpoint
                     $"/api/workspaces/{result.Value}",
                     new CreateWorkspaceResponse(
                         result.Value));
-            });
+            }).RequireAuthorization();
 
         return endpoints;
     }

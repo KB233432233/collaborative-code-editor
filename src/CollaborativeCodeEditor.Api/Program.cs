@@ -5,6 +5,9 @@ using CollaborativeCodeEditor.Application.Common.Authentication;
 using CollaborativeCodeEditor.Api.Endpoints.Workspaces;
 using CollaborativeCodeEditor.Api.Common.Errors;
 using CollaborativeCodeEditor.Api.Endpoints.Users;
+using CollaborativeCodeEditor.Api.Endpoints.Projects;
+using CollaborativeCodeEditor.Api.Endpoints.Documents;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,8 @@ builder.Services
     .AddInfrastructure(
         builder.Configuration);
 
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 app.UseExceptionHandler();
@@ -33,6 +38,17 @@ app.UseExceptionHandler();
 app.MapCreateWorkspace();
 
 app.MapRegisterNewUser();
+
+app.MapLoginEndpoint();
+
+app.MapCreateProject();
+
+app.MapCreateDocument();
+
+app.MapGetDocument();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // app.UseSwagger();
 // app.UseSwaggerUI();

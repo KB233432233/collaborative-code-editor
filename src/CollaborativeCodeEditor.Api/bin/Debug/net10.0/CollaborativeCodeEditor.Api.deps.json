@@ -10,6 +10,7 @@
         "dependencies": {
           "CollaborativeCodeEditor.Application": "1.0.0",
           "CollaborativeCodeEditor.Infrastructure": "1.0.0",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.12",
           "Microsoft.AspNetCore.OpenApi": "10.0.12",
           "Microsoft.EntityFrameworkCore.Design": "10.0.12",
           "Swashbuckle.AspNetCore": "10.2.3"

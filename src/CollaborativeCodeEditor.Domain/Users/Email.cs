@@ -4,7 +4,7 @@ namespace CollaborativeCodeEditor.Domain.Users;
 
 public sealed record Email : ValueObject
 {
-    public const int MaxLength = 50;
+    public const int MaxLength = 256;
     public string Value { get; }
 
     private Email(string value)

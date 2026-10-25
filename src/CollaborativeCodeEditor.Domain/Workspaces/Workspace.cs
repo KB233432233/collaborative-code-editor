@@ -215,4 +215,24 @@ public sealed class Workspace : AggregateRoot<WorkspaceId>
 
         Name = name;
     }
+
+    public bool CanBeEditedBy(UserId userId)
+    {
+        if (userId.IsEmpty)
+            return false;
+
+        return _members.Any(
+            member => member.UserId == userId
+                && (member.Role == WorkspaceRole.Owner
+                    || member.Role == WorkspaceRole.Editor));
+    }
+
+    public bool CanBeViewedBy(UserId userId)
+    {
+        if (userId.IsEmpty)
+            return false;
+
+        return _members.Any(
+            member => member.UserId == userId);
+    }
 }

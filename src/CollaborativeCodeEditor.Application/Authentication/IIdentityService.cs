@@ -9,4 +9,9 @@ public interface IIdentityService
         Email email,
         string password,
         CancellationToken cancellationToken = default);
+
+    Task<Result<UserId>> ValidateCredentialsAsync(
+    Email email,
+    string password,
+    CancellationToken cancellationToken = default);
 }

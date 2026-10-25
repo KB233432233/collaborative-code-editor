@@ -16,14 +16,18 @@ public sealed class RegisterNewUserCommandHandler
     private readonly IIdentityService _identityService;
     private readonly IUnitOfWork _unitOfWork;
 
+    // private readonly ITokenService _jwtTokenService;
+
     public RegisterNewUserCommandHandler(
         IUserRepository userRepository,
         IIdentityService identityService,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        ITokenService jwtTokenService)
     {
         _userRepository = userRepository;
         _identityService = identityService;
         _unitOfWork = unitOfWork;
+        // _jwtTokenService = jwtTokenService;
     }
 
     public async Task<Result<Guid>> Handle(

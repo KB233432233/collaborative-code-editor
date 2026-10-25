@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using CollaborativeCodeEditor.Infrastructure.Authentication;
 using FluentValidation;
-using FluentAssertions;
 
 
 namespace CollaborativeCodeEditor.Application.Tests.Users;
@@ -22,6 +21,9 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
     {
         _database = database;
     }
+
+    private static string UniqueEmail()
+       => $"user.{Guid.NewGuid():N}@example.com";
 
     [Fact]
     public async Task RegisterNewUser_Should_Persist()
@@ -82,8 +84,8 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
         var mediator =
             serviceProvider.GetRequiredService<ISender>();
 
-        const string displayName = "Khaled";
-        const string email = "khaled@example.com";
+        var displayName = "Khaled";
+        var email = UniqueEmail();
         const string password = "Password123!";
 
         // Act
@@ -143,6 +145,7 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
     {
         // Arrange
         var currentUser = new FakeCurrentUser(new UserId(Guid.NewGuid()));
+        var email = UniqueEmail();
 
         var serviceProvider =
             TestServiceProvider.Create(
@@ -154,21 +157,22 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
 
         var command = new RegisterNewUserCommand(
             "Khaled",
-            "khaled2@example.com",
+            email,
             "Password123!");
 
         // First registration
         var firstResult =
             await mediator.Send(command);
 
-        firstResult.IsSuccess.Should().BeTrue();
+        firstResult.IsSuccess.Should().BeTrue(
+        "the first registration of a fresh address must succeed");
 
         // Act
         var secondResult =
             await mediator.Send(
                 new RegisterNewUserCommand(
                     "Another User",
-                    "khaled@example.com",
+                    email,
                     "Password456!"));
 
         // Assert
@@ -200,7 +204,7 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
             await mediator.Send(
                 new RegisterNewUserCommand(
                     "Khaled",
-                    "khaled@example.com",
+                    UniqueEmail(),
                     "password"));
 
         // Assert
@@ -259,7 +263,7 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
             () => mediator.Send(
                 new RegisterNewUserCommand(
                     "",
-                    "khaled@example.com",
+                    UniqueEmail(),
                     "Password123!"));
 
         // Assert
