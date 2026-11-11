@@ -52,7 +52,7 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
                 .GetRequiredService<AppDbContext>();
 
         var user =
-            await dbContext.Users
+            await dbContext.DomainUsers
                 .FirstOrDefaultAsync(
                     x => x.Id == new UserId(result.Value));
 
@@ -103,7 +103,7 @@ public sealed class RegisterNewUserTests : IClassFixture<TestDatabase>
         var dbContext =
             serviceProvider.GetRequiredService<AppDbContext>();
 
-        var domainUser = await dbContext.Users
+        var domainUser = await dbContext.DomainUsers
             .SingleAsync(x => x.Id == new UserId(userId));
 
         domainUser.DisplayName.Value

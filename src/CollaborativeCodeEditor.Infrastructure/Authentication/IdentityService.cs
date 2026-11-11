@@ -8,12 +8,17 @@ namespace CollaborativeCodeEditor.Infrastructure.Authentication;
 public sealed class IdentityService : IIdentityService
 {
     private readonly UserManager<ApplicationIdentityUser> _userManager;
+    private readonly SignInManager<ApplicationIdentityUser> _signInManager;
 
     public IdentityService(
-        UserManager<ApplicationIdentityUser> userManager)
+        UserManager<ApplicationIdentityUser> userManager,
+        SignInManager<ApplicationIdentityUser> signInManager)
     {
         _userManager = userManager;
+        _signInManager = signInManager;
     }
+
+
 
     public async Task<Result<UserId>> CreateUserAsync(
         Email email,
@@ -61,12 +66,13 @@ public sealed class IdentityService : IIdentityService
                     "Invalid email or password."));
         }
 
-        var passwordValid =
-            await _userManager.CheckPasswordAsync(
+        var signInResult =
+            await _signInManager.CheckPasswordSignInAsync(
                 identityUser,
-                password);
+                password,
+                lockoutOnFailure: true);
 
-        if (!passwordValid)
+        if (!signInResult.Succeeded)
         {
             return Result<UserId>.Failure(
                 new Error(

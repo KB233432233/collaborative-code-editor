@@ -21,8 +21,8 @@ public sealed class RegisterNewUserCommandHandler
     public RegisterNewUserCommandHandler(
         IUserRepository userRepository,
         IIdentityService identityService,
-        IUnitOfWork unitOfWork,
-        ITokenService jwtTokenService)
+        IUnitOfWork unitOfWork
+        )
     {
         _userRepository = userRepository;
         _identityService = identityService;

@@ -28,7 +28,8 @@ public sealed class WorkspaceRepositoryTests
         var workspace = Workspace.Create(
             workspaceId,
             workspaceName,
-            ownerId);
+            ownerId,
+            DateTimeOffset.UtcNow);
 
         await repository.AddAsync(workspace);
 

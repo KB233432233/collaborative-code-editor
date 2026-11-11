@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CollaborativeCodeEditor.Infrastructure.Persistence.Repositories;
 
-
 public sealed class UserRepository : IUserRepository
 {
     private readonly AppDbContext _dbContext;
@@ -16,20 +15,18 @@ public sealed class UserRepository : IUserRepository
 
     public async Task AddAsync(
         User user,
-        CancellationToken cancellationToken = default
-    )
+        CancellationToken cancellationToken = default)
     {
-        await _dbContext.Users.AddAsync(
+        await _dbContext.DomainUsers.AddAsync(
             user,
             cancellationToken);
     }
 
     public async Task<User?> GetByIdAsync(
         UserId id,
-        CancellationToken cancellationToken = default
-    )
+        CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Users
+        return await _dbContext.DomainUsers
             .FirstOrDefaultAsync(
                 user => user.Id == id,
                 cancellationToken);

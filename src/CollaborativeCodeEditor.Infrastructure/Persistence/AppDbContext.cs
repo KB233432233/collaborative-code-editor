@@ -23,7 +23,7 @@ public sealed class AppDbContext
 
     public DbSet<Workspace> Workspaces => Set<Workspace>();
 
-    public DbSet<User> Users => Set<User>();
+    public DbSet<User> DomainUsers => Set<User>();
 
     public DbSet<Project> Projects => Set<Project>();
 

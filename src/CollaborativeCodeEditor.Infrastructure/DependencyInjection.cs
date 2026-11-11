@@ -7,11 +7,15 @@ using CollaborativeCodeEditor.Infrastructure.Authentication;
 using CollaborativeCodeEditor.Application.Authentication;
 using CollaborativeCodeEditor.Application.Projects.Ports;
 using CollaborativeCodeEditor.Application.Documents.Ports;
+using CollaborativeCodeEditor.Application.Common.Time;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
+
+
+using CollaborativeCodeEditor.Infrastructure.Common.Time;
 
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -57,25 +61,25 @@ public static class DependencyInjection
         //     .AddDefaultTokenProviders();
 
         services
-           .AddIdentityCore<ApplicationIdentityUser>(options =>
-           {
-               options.User.RequireUniqueEmail = true;
+            .AddIdentityCore<ApplicationIdentityUser>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
 
-               options.Password.RequiredLength = 8;
-               options.Password.RequireDigit = true;
-               options.Password.RequireUppercase = true;
-               options.Password.RequireLowercase = true;
-               options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
 
-               // Failed attempts are counted in
-               // IdentityService.ValidateCredentialsAsync.
-               options.Lockout.AllowedForNewUsers = true;
-               options.Lockout.MaxFailedAccessAttempts = 5;
-               options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
-           })
-           .AddRoles<IdentityRole<Guid>>()
-           .AddEntityFrameworkStores<AppDbContext>()
-           .AddDefaultTokenProviders();
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan =
+                    TimeSpan.FromMinutes(15);
+            })
+            .AddRoles<IdentityRole<Guid>>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddSignInManager()
+            .AddDefaultTokenProviders();
 
         services.AddScoped<
             IIdentityService,
@@ -86,6 +90,8 @@ public static class DependencyInjection
 
         // services.AddScoped<JwtTokenService>();
         services.AddScoped<ITokenService, JwtTokenService>();
+
+        services.AddSingleton<IClock, SystemClock>();
 
         services
     .AddAuthentication(options =>

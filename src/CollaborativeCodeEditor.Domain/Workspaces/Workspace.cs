@@ -28,7 +28,8 @@ public sealed class Workspace : AggregateRoot<WorkspaceId>
     public static Workspace Create(
         WorkspaceId id,
         WorkspaceName name,
-        UserId ownerId)
+        UserId ownerId,
+        DateTimeOffset createdAt)
     {
         if (id.IsEmpty)
         {
@@ -54,7 +55,7 @@ public sealed class Workspace : AggregateRoot<WorkspaceId>
             id,
             ownerId,
             WorkspaceRole.Owner,
-            DateTimeOffset.UtcNow));
+            createdAt));
 
         workspace.AddDomainEvent(
             new WorkspaceCreated(
@@ -65,7 +66,8 @@ public sealed class Workspace : AggregateRoot<WorkspaceId>
     }
     public void AddMember(
     UserId userId,
-    WorkspaceRole role)
+    WorkspaceRole role,
+    DateTimeOffset addedAt)
     {
         if (userId.IsEmpty)
         {
@@ -90,7 +92,7 @@ public sealed class Workspace : AggregateRoot<WorkspaceId>
             Id,
             userId,
             role,
-            DateTimeOffset.UtcNow);
+            addedAt);
 
         _members.Add(member);
 

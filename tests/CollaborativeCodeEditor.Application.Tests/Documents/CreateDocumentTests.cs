@@ -371,7 +371,8 @@ public sealed class CreateDocumentTests
         var workspace = Workspace.Create(
             workspaceId,
             WorkspaceName.Create(UniqueName("Workspace")),
-            ownerId);
+            ownerId,
+            DateTimeOffset.UtcNow);
 
         _database.DbContext.Workspaces.Add(workspace);
 

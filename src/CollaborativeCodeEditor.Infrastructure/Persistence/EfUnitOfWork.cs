@@ -1,5 +1,6 @@
 using CollaborativeCodeEditor.Application.Common.Persistence;
 using Microsoft.EntityFrameworkCore;
+using CollaborativeCodeEditor.Application.Common.Exceptions;
 
 namespace CollaborativeCodeEditor.Infrastructure.Persistence;
 
@@ -12,10 +13,19 @@ public sealed class EfUnitOfWork : IUnitOfWork
         _dbContext = dbContext;
     }
 
-    public Task SaveChangesAsync(
+    public async Task SaveChangesAsync(
         CancellationToken cancellationToken = default)
     {
-        return _dbContext.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException exception)
+        {
+            throw new ConcurrencyConflictException(
+                "A concurrency conflict occurred while saving changes.",
+                exception);
+        }
     }
 
     public async Task<T> ExecuteInTransactionAsync<T>(

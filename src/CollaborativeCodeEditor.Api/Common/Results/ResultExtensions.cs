@@ -26,6 +26,9 @@ public static class ResultExtensions
             var code when code.EndsWith(".NameAlreadyExists") =>
                 StatusCodes.Status409Conflict,
 
+            var code when code.EndsWith(".ConcurrencyConflict") =>
+                StatusCodes.Status409Conflict,
+
             _ => StatusCodes.Status400BadRequest
         };
 

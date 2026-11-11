@@ -23,4 +23,14 @@ public static class DocumentErrors
         new(
             "Document.NameAlreadyExists",
             "A document with this name already exists in the project.");
+
+    public static Error ConcurrencyConflict(long expectedVersion, long actualVersion)
+    => new(
+        "Document.ConcurrencyConflict",
+        $"Document was modified. Expected version {expectedVersion}, but current version is {actualVersion}.");
+
+    public static readonly Error InvalidVersion =
+        new(
+            "Document.InvalidVersion",
+            "Expected version cannot be negative.");
 }
