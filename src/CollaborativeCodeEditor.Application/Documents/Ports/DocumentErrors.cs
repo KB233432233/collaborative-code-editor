@@ -33,4 +33,9 @@ public static class DocumentErrors
         new(
             "Document.InvalidVersion",
             "Expected version cannot be negative.");
+
+    public static Error ConcurrencyConflict()
+    => new(
+        "Document.ConcurrencyConflict",
+        "The document was modified by another request. Please reload it and try again.");
 }

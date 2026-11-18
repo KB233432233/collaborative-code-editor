@@ -8,6 +8,8 @@ using CollaborativeCodeEditor.Application.Authentication;
 using CollaborativeCodeEditor.Application.Projects.Ports;
 using CollaborativeCodeEditor.Application.Documents.Ports;
 using CollaborativeCodeEditor.Application.Common.Time;
+using CollaborativeCodeEditor.Application.Common.Events;
+using CollaborativeCodeEditor.Infrastructure.Common.Events;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -92,6 +94,8 @@ public static class DependencyInjection
         services.AddScoped<ITokenService, JwtTokenService>();
 
         services.AddSingleton<IClock, SystemClock>();
+
+        services.AddScoped<IDomainEventDispatcher, MediatRDomainEventDispatcher>();
 
         services
     .AddAuthentication(options =>

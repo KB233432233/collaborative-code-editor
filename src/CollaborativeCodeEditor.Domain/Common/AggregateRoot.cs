@@ -1,6 +1,7 @@
 namespace CollaborativeCodeEditor.Domain.Common;
 
-public abstract class AggregateRoot<TId> : Entity<TId>
+public abstract class AggregateRoot<TId> : Entity<TId>, IHasDomainEvents
+    where TId : notnull
 {
     private readonly List<DomainEvent> _domainEvents = [];
 

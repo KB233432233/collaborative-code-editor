@@ -270,4 +270,165 @@ public sealed class WorkspaceTests
         Assert.Equal(memberId, domainEvent.UserId);
         Assert.Equal(WorkspaceRole.Editor, domainEvent.NewRole);
     }
+
+
+
+
+    [Theory]
+    [InlineData(WorkspaceRole.Owner)]
+    [InlineData(WorkspaceRole.Editor)]
+    public void CanBeEditedBy_WhenUserIsOwnerOrEditor_ShouldReturnTrue(
+        WorkspaceRole role)
+    {
+        // Arrange
+        var ownerId = UserId.New();
+        var memberId = UserId.New();
+
+        var workspace = CreateWorkspace(ownerId);
+
+        if (role == WorkspaceRole.Owner)
+        {
+            // The workspace owner is already a member.
+            memberId = ownerId;
+        }
+        else
+        {
+            workspace.AddMember(
+                memberId,
+                role,
+                MemberAddedAt);
+        }
+
+        // Act
+        var result = workspace.CanBeEditedBy(memberId);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void CanBeViewedBy_WhenUserIsOwner_ShouldReturnTrue()
+    {
+        // Arrange
+        var ownerId = UserId.New();
+        var workspace = CreateWorkspace(ownerId);
+
+        // Act
+        var result = workspace.CanBeViewedBy(ownerId);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void CanBeViewedBy_WhenUserIsEditor_ShouldReturnTrue()
+    {
+        // Arrange
+        var workspace = CreateWorkspace();
+        var editorId = UserId.New();
+
+        workspace.AddMember(
+            editorId,
+            WorkspaceRole.Editor,
+            MemberAddedAt);
+
+        // Act
+        var result = workspace.CanBeViewedBy(editorId);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void CanBeViewedBy_WhenUserIsViewer_ShouldReturnTrue()
+    {
+        // Arrange
+        var workspace = CreateWorkspace();
+        var viewerId = UserId.New();
+
+        workspace.AddMember(
+            viewerId,
+            WorkspaceRole.Viewer,
+            MemberAddedAt);
+
+        // Act
+        var result = workspace.CanBeViewedBy(viewerId);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void CanBeEditedBy_WhenUserIsViewer_ShouldReturnFalse()
+    {
+        // Arrange
+        var workspace = CreateWorkspace();
+        var viewerId = UserId.New();
+
+        workspace.AddMember(
+            viewerId,
+            WorkspaceRole.Viewer,
+            MemberAddedAt);
+
+        // Act
+        var result = workspace.CanBeEditedBy(viewerId);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void CanBeViewedBy_WhenUserIsNotMember_ShouldReturnFalse()
+    {
+        // Arrange
+        var workspace = CreateWorkspace();
+        var outsiderId = UserId.New();
+
+        // Act
+        var result = workspace.CanBeViewedBy(outsiderId);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void CanBeEditedBy_WhenUserIsNotMember_ShouldReturnFalse()
+    {
+        // Arrange
+        var workspace = CreateWorkspace();
+        var outsiderId = UserId.New();
+
+        // Act
+        var result = workspace.CanBeEditedBy(outsiderId);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void CanBeViewedBy_WhenUserIdIsEmpty_ShouldReturnFalse()
+    {
+        // Arrange
+        var workspace = CreateWorkspace();
+
+        // Act
+        var result = workspace.CanBeViewedBy(UserId.Empty);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void CanBeEditedBy_WhenUserIdIsEmpty_ShouldReturnFalse()
+    {
+        // Arrange
+        var workspace = CreateWorkspace();
+
+        // Act
+        var result = workspace.CanBeEditedBy(UserId.Empty);
+
+        // Assert
+        Assert.False(result);
+    }
+
 }

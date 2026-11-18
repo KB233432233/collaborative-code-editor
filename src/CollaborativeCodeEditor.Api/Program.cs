@@ -47,6 +47,8 @@ app.MapCreateDocument();
 
 app.MapGetDocument();
 
+app.MapUpdateDocument();
+
 app.UseAuthentication();
 app.UseAuthorization();
 

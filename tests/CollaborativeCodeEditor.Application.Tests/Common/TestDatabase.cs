@@ -7,7 +7,7 @@ namespace CollaborativeCodeEditor.Application.Tests.Common;
 public sealed class TestDatabase : IAsyncLifetime
 {
     private readonly PostgreSqlContainer _container =
-        new PostgreSqlBuilder()
+        new PostgreSqlBuilder("postgres:16-alpine")
             .WithImage("postgres:16")
             .WithDatabase("collaborative_code_editor_test")
             .WithUsername("postgres")

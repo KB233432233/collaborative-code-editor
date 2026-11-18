@@ -5,7 +5,7 @@ using CollaborativeCodeEditor.Application.Documents.Ports;
 using CollaborativeCodeEditor.Application.Projects.Ports;
 using CollaborativeCodeEditor.Application.Workspaces.Ports;
 using CollaborativeCodeEditor.Domain.Documents;
-using CollaborativeCodeEditor.Domain.Projects;
+using CollaborativeCodeEditor.Application.Common.Exceptions;
 using MediatR;
 
 namespace CollaborativeCodeEditor.Application.Documents.Commands.UpdateDocument;
@@ -91,10 +91,16 @@ public sealed class UpdateDocumentCommandHandler
             command.Content,
             expectedVersion);
 
-        await _unitOfWork.SaveChangesAsync(
-            cancellationToken);
+        try
+        {
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+        }
+        catch (ConcurrencyConflictException)
+        {
+            return Result<long>.Failure(
+                DocumentErrors.ConcurrencyConflict());
+        }
 
-        return Result<long>.Success(
-            document.Version.Value);
+        return Result<long>.Success(document.Version.Value);
     }
 }
